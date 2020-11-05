@@ -1,6 +1,5 @@
 package com.example.simondice
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -9,102 +8,92 @@ import kotlin.random.Random
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//declaracion de botones, arrays y el boolean de jugando
+
+//array1=generado, array2=dado por el jugador
+
+        var array1= ArrayList<Int>()
+        var array2=ArrayList<Int>()
 
         val rojo: Button=findViewById(R.id.rojo)
         val azul: Button=findViewById(R.id.azul)
         val amarillo: Button=findViewById(R.id.amarillo)
         val verde: Button=findViewById(R.id.verde)
-
-
-        val toast1=Toast.makeText(this, "fallaste", Toast.LENGTH_SHORT)
-        val toast2=Toast.makeText(this, "aaaaa", Toast.LENGTH_SHORT)
-
         val inicio: Button = findViewById(R.id.inicio)
+        val siguienteRonda: Button=findViewById(R.id.siguienteRonda)
+
+        var jugando=false
+
+//instrucciones para el boton de inicio (cambiar "jugando" a true, borrar los arrays que pudieran estar molestando con cosas dentro, y añadir el primer color al array 1)
+
         inicio.setOnClickListener(){
-
-            println("a")
-            simonDice(rojo,azul,amarillo,verde,toast2)
-            toast1.show()
+            Toast.makeText(applicationContext,"Inicio",Toast.LENGTH_SHORT).show()
+            array1.clear()
+            array2.clear()
+            jugando=true
+            array1.add(Random.nextInt(4)+1)
+            mostrar(array1)
         }
-    }
-}
 
+//instrucciones para el boton siguiente ronda(comprueba si el usuario esta jugando y que la secuencia de colores introducida por el jugador sea la adecuada, borra el array2, y da otro numero al array1)
 
-    private fun pedirArray2(rojo:Button,azul:Button,amarillo:Button,verde:Button,contador:Int): ArrayList<Int> {
+        siguienteRonda.setOnClickListener(){
+            if (jugando){
+                if (array1==array2){
+                    array2.clear()
+                    array1.add(Random.nextInt(4)+1)
+                    mostrar(array1)
+                }else{
+                    Toast.makeText(applicationContext, "fallaste", Toast.LENGTH_SHORT).show()
+                    jugando=false
+                }
+            }else{
+                Toast.makeText(applicationContext,"No le has dado a iniciar",Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        var array2 = ArrayList<Int>()
-
-        var jugador:Int=0
+//asignamos los distintos colores a valores del 1 al 4 que meteremos en el array 2
 
         rojo.setOnClickListener(){
-            jugador=1
-            print("rojo")
+            añadir(array2,1)
         }
         azul.setOnClickListener(){
-            jugador=2
-            print("azul")
+            añadir(array2,2)
         }
         amarillo.setOnClickListener(){
-            jugador=3
-            print("amarillo")
+            añadir(array2,3)
         }
         verde.setOnClickListener(){
-            jugador=4
-            print("verde")
+            añadir(array2,4)
         }
-
-
-        var a: Int=contador
-        while (a!=0) {
-            a--
-            array2.add(jugador)
-            println(array2[0])
-        }
-        return array2
     }
 
-    private fun mostrarArray1(array1: ArrayList<Int>): ArrayList<Int> {
-        array1.add(Random.nextInt(4) + 1)
+//rojo=1   azul=2   amarillo=3   verde=4
 
-        for (contador in 0..(array1.size)-1){
-            when (array1[contador]){
-                1-> {
-                    println("hola rojo")}
-                4-> {
-                    println("hola verde")}
-                2-> {
-                    println("hola azul")}
-                3-> {
-                    println("hola amarillo")}
-                else->{
-                    println("ninguno de esos colores salio")
-                }
+    fun añadir(array: ArrayList<Int>, color:Int){
+        array.add(color)
+    }
 
+//muestra el array 1 con toasts
+
+    private fun mostrar(array:ArrayList<Int>) {
+
+        for (color in array) {
+            when (color) {
+                1 ->
+                    Toast.makeText(applicationContext, "Rojo", Toast.LENGTH_SHORT).show()
+                2 ->
+                    Toast.makeText(applicationContext, "Azul", Toast.LENGTH_SHORT).show()
+                3 ->
+                    Toast.makeText(applicationContext,"Amarillo",Toast.LENGTH_SHORT).show()
+                else ->
+                    Toast.makeText(applicationContext, "Verde", Toast.LENGTH_SHORT).show()
             }
-
         }
-        return array1
     }
-
-private fun simonDice(rojo: Button,azul: Button,amarillo: Button,verde: Button,toast: Toast) {
-    var array1 = ArrayList<Int>()
-
-    var contador=0
-    toast.show()
-    do {
-        var array2 = ArrayList<Int>()
-        contador++
-        array1=mostrarArray1(array1)
-        array2=pedirArray2(rojo,azul,amarillo,verde,contador)
-        println("b")
-
-    }while (array1==array2)
-    println("c")
-
-
 }
-
-
