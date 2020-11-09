@@ -3,15 +3,19 @@ package com.example.simondice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import kotlin.random.Random
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var simon:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        simon=findViewById(R.id.simon)
 
 //declaracion de botones, arrays y el boolean de jugando
 
@@ -49,8 +53,9 @@ class MainActivity : AppCompatActivity() {
                     array1.add(Random.nextInt(4)+1)
                     mostrar(array1)
                 }else{
-                    Toast.makeText(applicationContext, "fallaste", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "fallaste", Toast.LENGTH_SHORT).show()
                     jugando=false
+                    simon.setImageResource(R.drawable.game_over)
                 }
             }else{
                 Toast.makeText(applicationContext,"No le has dado a iniciar",Toast.LENGTH_SHORT).show()
@@ -85,14 +90,18 @@ class MainActivity : AppCompatActivity() {
 
         for (color in array) {
             when (color) {
-                1 ->
-                    Toast.makeText(applicationContext, "Rojo", Toast.LENGTH_SHORT).show()
-                2 ->
-                    Toast.makeText(applicationContext, "Azul", Toast.LENGTH_SHORT).show()
-                3 ->
-                    Toast.makeText(applicationContext,"Amarillo",Toast.LENGTH_SHORT).show()
-                else ->
-                    Toast.makeText(applicationContext, "Verde", Toast.LENGTH_SHORT).show()
+                1 -> {
+                    Corrutina.dibujarColor(1,simon)
+                }
+                2 -> {
+                    Corrutina.dibujarColor(2,simon)
+                }
+                3 -> {
+                    Corrutina.dibujarColor(3,simon)
+                }
+                else -> {
+                    Corrutina.dibujarColor(4,simon)
+                }
             }
         }
     }
