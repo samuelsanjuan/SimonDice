@@ -10,12 +10,19 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var simon:ImageView
+
+    lateinit var gameOver:ImageView
+    lateinit var rojo:ImageView
+    lateinit var azul:ImageView
+    lateinit var amarillo:ImageView
+    lateinit var verde:ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        simon=findViewById(R.id.simon)
+        gameOver=findViewById(R.id.gameOver)
+
 
 //declaracion de botones, arrays y el boolean de jugando
 
@@ -37,11 +44,12 @@ class MainActivity : AppCompatActivity() {
 
         inicio.setOnClickListener(){
             Toast.makeText(applicationContext,"Inicio",Toast.LENGTH_SHORT).show()
+            gameOver.setImageResource(R.drawable.void_square)
             array1.clear()
             array2.clear()
             jugando=true
             array1.add(Random.nextInt(4)+1)
-            mostrar(array1)
+            Corrutina.mostrar(array1,rojo=findViewById(R.id.simonRojo),azul=findViewById(R.id.simonAzul),amarillo=findViewById(R.id.simonAmarillo),verde=findViewById(R.id.simonVerde))
         }
 
 //instrucciones para el boton siguiente ronda(comprueba si el usuario esta jugando y que la secuencia de colores introducida por el jugador sea la adecuada, borra el array2, y da otro numero al array1)
@@ -51,11 +59,10 @@ class MainActivity : AppCompatActivity() {
                 if (array1==array2){
                     array2.clear()
                     array1.add(Random.nextInt(4)+1)
-                    mostrar(array1)
+                    Corrutina.mostrar(array1,rojo=findViewById(R.id.simonRojo),azul=findViewById(R.id.simonAzul),amarillo=findViewById(R.id.simonAmarillo),verde=findViewById(R.id.simonVerde))
                 }else{
-                    //Toast.makeText(applicationContext, "fallaste", Toast.LENGTH_SHORT).show()
                     jugando=false
-                    simon.setImageResource(R.drawable.game_over)
+                    gameOver.setImageResource(R.drawable.game_over)
                 }
             }else{
                 Toast.makeText(applicationContext,"No le has dado a iniciar",Toast.LENGTH_SHORT).show()
@@ -82,27 +89,5 @@ class MainActivity : AppCompatActivity() {
 
     fun añadir(array: ArrayList<Int>, color:Int){
         array.add(color)
-    }
-
-//muestra el array 1 con toasts
-
-    private fun mostrar(array:ArrayList<Int>) {
-
-        for (color in array) {
-            when (color) {
-                1 -> {
-                    Corrutina.dibujarColor(1,simon)
-                }
-                2 -> {
-                    Corrutina.dibujarColor(2,simon)
-                }
-                3 -> {
-                    Corrutina.dibujarColor(3,simon)
-                }
-                else -> {
-                    Corrutina.dibujarColor(4,simon)
-                }
-            }
-        }
     }
 }
