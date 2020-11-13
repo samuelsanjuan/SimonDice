@@ -97,67 +97,11 @@
         app:layout_constraintTop_toBottomOf="@+id/inicio"
         app:layout_constraintVertical_bias="0.16" />
 
-    <ImageView
-        android:id="@+id/simonRojo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameOver"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/siguienteRonda"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/void_square" />
 
     <ImageView
-        android:id="@+id/simonAmarillo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simonRojo"
-        app:layout_constraintVertical_bias="0.009"
-        app:srcCompat="@drawable/void_square" />
-
-    <ImageView
-        android:id="@+id/simonVerde"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simonAzul"
-        app:layout_constraintVertical_bias="0.009"
-        app:srcCompat="@drawable/void_square" />
-
-    <ImageView
-        android:id="@+id/simonAzul"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/gameOver"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.65"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/siguienteRonda"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/void_square" />
-
-    <ImageView
-        android:id="@+id/gameOver"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="200dp"
+        android:id="@+id/simon"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

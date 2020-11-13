@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         var array1= ArrayList<Int>()
         var array2=ArrayList<Int>()
 
-        var gameOver=findViewById<ImageView>(R.id.gameOver)
+        var simon=findViewById<ImageView>(R.id.simon)
 
         val rojo: Button=findViewById(R.id.rojo)
         val azul: Button=findViewById(R.id.azul)
@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
 //instrucciones para el boton de inicio (cambiar "jugando" a true, borrar los arrays que pudieran estar molestando con cosas dentro y añadir y mostrar el primer color al array 1)
 
         inicio.setOnClickListener(){
-            gameOver.setImageResource(R.drawable.void_square)
+            simon.setImageResource(R.drawable.void_square)
             array1.clear()
             array2.clear()
             jugando=true
             array1.add(Random.nextInt(4)+1)
-            Corrutina.mostrar(array1,rojo=findViewById(R.id.simonRojo),azul=findViewById(R.id.simonAzul),amarillo=findViewById(R.id.simonAmarillo),verde=findViewById(R.id.simonVerde))
+            Corrutina.mostrar(array1,simon)
         }
 
 //instrucciones para el boton siguiente ronda(comprueba si el usuario esta jugando y que la secuencia de colores introducida por el jugador sea la adecuada, borra el array2, y da otro numero al array1 y si fallas te da la puntuacion)
@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity() {
                 if (array1==array2){
                     array2.clear()
                     array1.add(Random.nextInt(4)+1)
-                    Corrutina.mostrar(array1,rojo=findViewById(R.id.simonRojo),azul=findViewById(R.id.simonAzul),amarillo=findViewById(R.id.simonAmarillo),verde=findViewById(R.id.simonVerde))
+                    Corrutina.mostrar(array1,simon)
                 }else{
                     jugando=false
-                    gameOver.setImageResource(R.drawable.game_over)
+                    simon.setImageResource(R.drawable.game_over)
                     Toast.makeText(this,"tu puntuacion ha sido "+(array1.size-1),Toast.LENGTH_SHORT).show()
                 }
             }else{
