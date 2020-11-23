@@ -5,23 +5,17 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import kotlin.random.Random
-import kotlin.collections.ArrayList
+import androidx.lifecycle.Observer
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//declaracion de botones, arrays, la imagen de game over y el boolean de jugando
+        //declaracion de botones y de la imagen
 
-//array1=generado, array2=dado por el jugador
-
-        var array1= ArrayList<Int>()
-        var array2=ArrayList<Int>()
-
-        var simon=findViewById<ImageView>(R.id.simon)
+        val simon=findViewById<ImageView>(R.id.simon)
 
         val rojo: Button=findViewById(R.id.rojo)
         val azul: Button=findViewById(R.id.azul)
@@ -30,50 +24,42 @@ class MainActivity : AppCompatActivity() {
         val inicio: Button = findViewById(R.id.inicio)
         val siguienteRonda: Button=findViewById(R.id.siguienteRonda)
 
-        var jugando=false
+        //observers para saber cuando hay que desabilitar los botones (cuando se estan mostrando)
+        ViewModel.botonClickable.observe(this, Observer{ botonClickable->siguienteRonda.isClickable=botonClickable})
+        ViewModel.botonClickable.observe(this, Observer{ botonClickable->rojo.isClickable=botonClickable})
+        ViewModel.botonClickable.observe(this, Observer{ botonClickable->azul.isClickable=botonClickable})
+        ViewModel.botonClickable.observe(this, Observer{ botonClickable->amarillo.isClickable=botonClickable})
+        ViewModel.botonClickable.observe(this, Observer{ botonClickable->verde.isClickable=botonClickable})
 
-//instrucciones para el boton de inicio (cambiar "jugando" a true, borrar los arrays que pudieran estar molestando con cosas dentro y añadir y mostrar el primer color al array 1)
+        //observer para  cuando salten los toasts (al perder y cuando no le has dado a iniciar)
+        ViewModel.textoToast.observe(this, Observer { textoToast-> val mensaje=textoToast
+            Toast.makeText(applicationContext,mensaje,Toast.LENGTH_SHORT).show()})
 
+        //observer para desactivar el boton de inicio
+        ViewModel.botonEnable.observe(this, Observer { botonEnable->inicio.isEnabled=botonEnable })
+
+        //lanza metodo de instrucciones para el boton de inicio
         inicio.setOnClickListener(){
-            simon.setImageResource(R.drawable.void_square)
-            array1.clear()
-            array2.clear()
-            jugando=true
-            array1.add(Random.nextInt(4)+1)
-            Corrutina.mostrar(array1,simon)
+            ViewModel.inicio(simon)
         }
 
-//instrucciones para el boton siguiente ronda(comprueba si el usuario esta jugando y que la secuencia de colores introducida por el jugador sea la adecuada, borra el array2, y da otro numero al array1 y si fallas te da la puntuacion)
-
+        //lanza metodo con instrucciones para el boton siguiente ronda
         siguienteRonda.setOnClickListener(){
-            if (jugando){
-                if (array1==array2){
-                    array2.clear()
-                    array1.add(Random.nextInt(4)+1)
-                    Corrutina.mostrar(array1,simon)
-                }else{
-                    jugando=false
-                    simon.setImageResource(R.drawable.game_over)
-                    Toast.makeText(this,"tu puntuacion ha sido "+(array1.size-1),Toast.LENGTH_SHORT).show()
-                }
-            }else{
-                Toast.makeText(applicationContext,"No le has dado a iniciar",Toast.LENGTH_SHORT).show()
-            }
+            ViewModel.actualizar(simon)
         }
 
-//asignamos los distintos colores a valores del 1 al 4 que meteremos en el array 2 (rojo=1   azul=2   amarillo=3   verde=4)
-
+        //asignamos los distintos botones a valores del 1 al 4 (rojo=1   azul=2   amarillo=3   verde=4)
         rojo.setOnClickListener(){
-            array2.add(1)
+            ViewModel.añadirArray2(1)
         }
         azul.setOnClickListener(){
-            array2.add(2)
+            ViewModel.añadirArray2(2)
         }
         amarillo.setOnClickListener(){
-            array2.add(3)
+            ViewModel.añadirArray2(3)
         }
         verde.setOnClickListener(){
-            array2.add(4)
+            ViewModel.añadirArray2(4)
         }
     }
 }
