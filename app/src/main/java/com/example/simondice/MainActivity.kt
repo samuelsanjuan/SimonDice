@@ -2,6 +2,7 @@ package com.example.simondice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -38,14 +39,18 @@ class MainActivity : AppCompatActivity() {
         //observer para desactivar el boton de inicio
         ViewModel.botonEnable.observe(this, Observer { botonEnable->inicio.isEnabled=botonEnable })
 
+        //observer para la imagen del juego (colores o game over)
+        ViewModel.imagenSimon.observe(this, Observer { imagenSimon->val imagen=imagenSimon
+            simon.setImageResource(imagen)})
+
         //lanza metodo de instrucciones para el boton de inicio
         inicio.setOnClickListener(){
-            ViewModel.inicio(simon)
+            ViewModel.inicio()
         }
 
         //lanza metodo con instrucciones para el boton comprobar
         siguienteRonda.setOnClickListener(){
-            ViewModel.actualizar(simon)
+            ViewModel.actualizar()
         }
 
         //asignamos los distintos botones a valores del 1 al 4 (rojo=1   azul=2   amarillo=3   verde=4)

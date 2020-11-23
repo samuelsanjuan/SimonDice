@@ -14,6 +14,7 @@ object ViewModel {
     val botonEnable= MutableLiveData<Boolean>()
     val textoToast=MutableLiveData<String>()
     val botonClickable= MutableLiveData<Boolean>()
+    val imagenSimon= MutableLiveData<Int>()
 
     //array1=generado, array2=dado por el jugador
     val array1= ArrayList<Int>()
@@ -26,16 +27,16 @@ object ViewModel {
         //boton enable es para el boton de inicio el boton clickable es para todos los demas
         botonEnable.value = true
         botonClickable.value = true
+        imagenSimon.value=R.drawable.void_square
     }
-
 
 //cambiar "jugando" a true, borrar los arrays que pudieran estar molestando con cosas dentro, añadir y mostrar el primer color del array 1
 
-    fun inicio(simon: ImageView){
+    fun inicio(){
         //desactiva el boton de inicio
         botonEnable.value=false
         //pone el cuadro en blanco (dibuja ningun color)
-        simon.setImageResource(R.drawable.void_square)
+        imagenSimon.value=R.drawable.void_square
         //limpia los arrays
         array1.clear()
         array2.clear()
@@ -44,12 +45,12 @@ object ViewModel {
         //añade un nuevo numero al array1
         array1.add(Random.nextInt(4)+1)
         //muestra el array1
-        corrutinaMostrar(array1,simon)
+        corrutinaMostrar(array1)
     }
 
 //comprueba si el usuario esta jugando y que la secuencia de colores introducida por el jugador sea la adecuada, borra el array2, y añade y muestra otro numero al array1
 
-    fun actualizar(simon:ImageView){
+    fun actualizar(){
         //comprueba si el jugador le ha dado a iniciar y esta jugando
         if (jugando){
             //comprueba que los arrays sean iguales
@@ -59,12 +60,12 @@ object ViewModel {
                 //añade un color al array1
                 array1.add(Random.nextInt(4)+1)
                 //llama al metodo que muestra los colores
-                corrutinaMostrar(array1,simon)
+                corrutinaMostrar(array1)
             }else{
                 //cambia jugando a false, porque el jugador perdio
                 jugando=false
                 //pone el dibujo de game over
-                simon.setImageResource(R.drawable.game_over)
+                imagenSimon.value=R.drawable.game_over
                 //toast que te da la puntuacion al perder
                 textoToast.value=("tu puntuacion ha sido "+(array1.size-1))
                 //desbloqua el boton de inicio
@@ -82,7 +83,7 @@ object ViewModel {
     }
 
     //metodo con la corrutina que se encarga de enseñar los colores y bloquar todos los botones menos el de inicio
-    fun corrutinaMostrar(array:ArrayList<Int>, simon:ImageView){
+    fun corrutinaMostrar(array:ArrayList<Int>){
 
         //lanzamiento de la corrutina
         CoroutineScope(Dispatchers.Main).launch {
@@ -95,20 +96,20 @@ object ViewModel {
                 delay(50)
                 when (color) {
                     1 -> {
-                        simon.setImageResource(R.drawable.red_square)
+                        imagenSimon.value=R.drawable.red_square
                     }
                     2 -> {
-                        simon.setImageResource(R.drawable.blue_square)
+                        imagenSimon.value=R.drawable.blue_square
                     }
                     3 -> {
-                        simon.setImageResource(R.drawable.yellow_square)
+                        imagenSimon.value=R.drawable.yellow_square
                     }
                     else -> {
-                        simon.setImageResource(R.drawable.green_square)
+                        imagenSimon.value=R.drawable.green_square
                     }
                 }
                 delay(150)
-                simon.setImageResource(R.drawable.void_square)
+                imagenSimon.value=R.drawable.void_square
             }
             //desbloquea los botones
             botonClickable.value=true
