@@ -71,7 +71,7 @@ object ViewModel {
                 botonEnable.value=true
             }
         }else{
-            //toast que te informa de que tienes que darle a iniciar
+            //toast que te dice de que tienes que darle a iniciar
             textoToast.value= "No le has dado a iniciar"
         }
     }

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             ViewModel.inicio(simon)
         }
 
-        //lanza metodo con instrucciones para el boton siguiente ronda
+        //lanza metodo con instrucciones para el boton comprobar
         siguienteRonda.setOnClickListener(){
             ViewModel.actualizar(simon)
         }
